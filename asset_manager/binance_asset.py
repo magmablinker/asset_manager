@@ -33,7 +33,6 @@ class BinanceAsset(object):
         if not os.path.exists(output_file) or not os.path.isfile(output_file):
             output = {
                 "data": [],
-                "initial_value": ""
             }
         else:
             with open(output_file) as f:

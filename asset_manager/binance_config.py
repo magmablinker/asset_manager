@@ -12,5 +12,5 @@ class BinanceConfig(object):
         with open(file_path, "r") as f:
             config = json.load(f)
 
-            self.api_key = config["binance_api_key"]
-            self.api_secret = config["binance_api_secret"]
+            self.api_key = config["api_key"]
+            self.api_secret = config["api_secret"]
