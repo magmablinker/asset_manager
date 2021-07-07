@@ -8,7 +8,7 @@ from asset_manager.util.util import Util
 '''
 Helper class to run through the process of fetching necessary data
 '''
-class AssetManager():
+class AssetManager(object):
     def __init__(self, binance_config_path: str, debug_mode=False):
         init()
 

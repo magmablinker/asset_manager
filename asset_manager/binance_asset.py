@@ -7,7 +7,7 @@ from asset_manager.util.util import Util
 '''
 Represents a Binance crypto asset
 '''
-class BinanceAsset():
+class BinanceAsset(object):
     def __init__(self, asset: str, amount: float, debug_mode=False):
         self.asset = asset
         self.amount = amount

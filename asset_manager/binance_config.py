@@ -4,7 +4,7 @@ import json
 '''
 Class to load the required variables to access the Binance API
 '''
-class BinanceConfig():
+class BinanceConfig(object):
     def __init__(self, file_path):
         if not os.path.exists(file_path):
             raise ValueError(f"Binance config file {file_path} not found")

@@ -5,7 +5,7 @@ from datetime import datetime
 '''
 Represents the total balance of all binance crypto assets
 '''
-class BinanceTotalBalance():
+class BinanceTotalBalance(object):
     def __init__(self):
         self.total_balance = 0
 
