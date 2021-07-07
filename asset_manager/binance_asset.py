@@ -7,16 +7,15 @@ from datetime import datetime
 Represents a Binance crypto asset
 '''
 class BinanceAsset():
-    def __init__(self, asset: str, amount: float, client: Client, debug_mode=False):
+    def __init__(self, asset: str, amount: float, debug_mode=False):
         self.asset = asset
         self.amount = amount
-        self.client = client
         self.symbol_balance = 0
         self.debug_mode = debug_mode
 
-    def write(self):
+    def write(self, client: Client):
         symbol = f"{self.asset}USDT"
-        symbol_ticker = self.client.get_symbol_ticker(symbol=symbol)
+        symbol_ticker = client.get_symbol_ticker(symbol=symbol)
         self.symbol_balance = self.amount * float(symbol_ticker['price'])
 
         balance_rounded = "{:.2f}".format(self.symbol_balance)
@@ -49,3 +48,10 @@ class BinanceAsset():
     def print(self, text: str):
         if self.debug_mode:
             print(text)
+
+
+    def load_asset_data(self):
+        output_file = f"data/assets/{self.asset}.json"
+
+        with open(output_file, "r") as f:
+            return json.load(f)["data"]
