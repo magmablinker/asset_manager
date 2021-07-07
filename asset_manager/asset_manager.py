@@ -32,7 +32,6 @@ class AssetManager(object):
                     "free": free
                 })
             
-
     def run(self):
         for asset in self.assets:
             binance_asset = BinanceAsset(asset["asset"], asset["free"], self.debug_mode)
