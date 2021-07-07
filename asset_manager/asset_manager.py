@@ -3,6 +3,7 @@ from asset_manager.binance_asset import BinanceAsset
 from asset_manager.binance_total_balance import BinanceTotalBalance
 from binance import Client
 from colorama import init, Fore
+from asset_manager.util.util import Util
 
 '''
 Helper class to run through the process of fetching necessary data
@@ -42,10 +43,10 @@ class AssetManager():
             
         self.binance_total_balance.write()
 
-        total_balance_rounded = "{:.2f}".format(self.binance_total_balance.total_balance)
-        self.print(f"Total Balance: {total_balance_rounded} USDT")
+        self.print(f"Total Balance: {Util.round(self.binance_total_balance.total_balance)} USDT")
+        self.print("")
 
-    def calculate_profits_from_inital(self):
+    def calculate_profits_from_inital_per_asset(self):
         for asset in self.assets:
             binance_asset = BinanceAsset(asset["asset"], asset["free"], self.debug_mode)
 
@@ -65,16 +66,17 @@ class AssetManager():
             else:
                 text = "Profit"
 
-            amount = last_asset_data - initial_asset_data
-            percent = ((last_asset_data - initial_asset_data) / initial_asset_data) * 100
+            amount = Util.round(last_asset_data - initial_asset_data)
+            percent = Util.round(((last_asset_data - initial_asset_data) / initial_asset_data) * 100) # We don't care about decimals
 
             color = Fore.RED if is_at_loss else Fore.GREEN
 
             print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+")
             print(f"[{binance_asset.asset}]")
-            print(f"[+] Inital Captured Value: {initial_asset_data} USDT") 
-            print(f"[+] Last Captured Value: {last_asset_data} USDT")         
-            print(f"[+] {text} {amount} USDT | {color}{percent}{Fore.RESET}%")
+            print(f"Inital Captured Value: {Util.round(initial_asset_data)} USDT") 
+            print(f"Last Captured Value: {Util.round(last_asset_data)} USDT")         
+            print(f"{color}{amount}{Fore.RESET} USDT | {color}{percent}{Fore.RESET}%")
+            print(f"Currently at {color}{text}{Fore.RESET}")
             print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+")  
             print("")
 

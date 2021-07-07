@@ -2,6 +2,7 @@ import os
 import json
 from binance import Client
 from datetime import datetime
+from asset_manager.util.util import Util
 
 '''
 Represents a Binance crypto asset
@@ -17,10 +18,8 @@ class BinanceAsset():
         symbol = f"{self.asset}USDT"
         symbol_ticker = client.get_symbol_ticker(symbol=symbol)
         self.symbol_balance = self.amount * float(symbol_ticker['price'])
-
-        balance_rounded = "{:.2f}".format(self.symbol_balance)
         
-        self.print(f"[{self.asset}] {balance_rounded} USDT")
+        self.print(f"[{self.asset}] {Util.round(self.symbol_balance)} USDT")
 
         output_file = f"data/assets/{self.asset}.json"
 

@@ -1,3 +1,3 @@
 config/*
 data/*
-asset_manager/__pycache__
+**/__pycache__/
