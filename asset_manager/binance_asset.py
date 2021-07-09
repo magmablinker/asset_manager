@@ -17,11 +17,7 @@ class BinanceAsset(object):
         self.pair_asset = pair_asset
 
     def write(self, client: Client):
-        symbol = f"{self.asset}{self.pair_asset}"
-        symbol_ticker = client.get_symbol_ticker(symbol=symbol)
-        self.symbol_balance = self.amount * float(symbol_ticker['price'])
-        
-        self.print(f"[{self.asset}] {Util.round(self.symbol_balance)} USDT")
+        self._get_symbol_balance(client)
 
         output = self._get_output()
             
@@ -38,6 +34,13 @@ class BinanceAsset(object):
 
         with open(output_file, "r") as f:
             return json.load(f)["data"]
+
+    def _get_symbol_balance(self, client: Client):
+        symbol = f"{self.asset}{self.pair_asset}"
+        symbol_ticker = client.get_symbol_ticker(symbol=symbol)
+        self.symbol_balance = self.amount * float(symbol_ticker['price'])
+        
+        self.print(f"[{self.asset}] {Util.round(self.symbol_balance)} USDT")
 
     def _get_output(self):
         if not os.path.exists(self.output_file) or not os.path.isfile(self.output_file):
