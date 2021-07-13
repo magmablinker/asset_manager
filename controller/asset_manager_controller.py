@@ -3,6 +3,7 @@ from flask_cors import cross_origin
 from asset_manager.asset_manager import AssetManager
 from dto.assets_fetch_response import AssetsFetchResponse
 from dto.base_response import BaseResponse
+from asset_manager.binance_total_balance import BinanceTotalBalance
 
 asset_manager_controller = Blueprint("asset_manager_controller", __name__)
 
@@ -28,6 +29,9 @@ def generate_graphs():
 
     for asset in asset_manager.binance_assets:
         asset.to_graph()
+
+    total_balance = BinanceTotalBalance()
+    total_balance.to_graph()
 
     base_response.infos.add_message("Successfully generated graphs")
 
