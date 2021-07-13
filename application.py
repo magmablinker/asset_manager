@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('Agg')
+
 from flask import Flask
 from flask_cors import CORS
 from controller.asset_controller import asset_controller

@@ -67,7 +67,7 @@ def list_assets():
 def get_asset_graph(asset_name: str):
     asset_graph_response = AssetGraphResponse()
     
-    if not os.path.exists(f"img/{asset_name}"):
+    if not os.path.exists(f"img/{asset_name}.png"):
         asset_graph_response.response_code = 404
         asset_graph_response.infos.add_error(f"No data available for asset {asset_name}")
 
@@ -76,7 +76,7 @@ def get_asset_graph(asset_name: str):
 
         return response
 
-    files = glob.glob(f"img/{asset_name}/*.png")
+    files = glob.glob(f"img/{asset_name}.png")
 
     if len(files) < 1:
         asset_graph_response.response_code = 404

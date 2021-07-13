@@ -44,13 +44,9 @@ class BinanceAsset(object):
         for entry in balances:
             y_axis.append(float(entry["balance"]))
             x_axis.append(datetime.strptime(entry["timestamp"], "%d-%m-%Y %H:%M:%S").strftime("%d.%m.%Y"))
-
-        if not os.path.exists(f"img/{self.asset}"):
-            self.print(f"Directory img/{self.asset} missing, creating it")
-            os.mkdir(f"img/{self.asset}")
         
         self.print(f"Creating diagram for {self.asset}")
-        Util.plot(x_axis, y_axis, f"{self.asset} Worth Over Time", "Timestamp", "Balance", f"img/{self.asset}/{datetime.now().strftime('%d-%m-%Y_%H_%M_%S')}")
+        Util.plot(x_axis, y_axis, f"{self.asset} Worth Over Time", "Timestamp", "Balance", f"img/{self.asset}")
 
     def get_profits(self) -> BinanceAssetProfits:
         profits = BinanceAssetProfits()
