@@ -3,6 +3,7 @@ import glob
 import json
 import base64
 from flask import Blueprint, jsonify
+from flask_cors import cross_origin
 from dto.asset_response import AssetResponse
 from dto.asset_profits_response import AssetProfitsResponse
 from dto.asset_graph_response import AssetGraphResponse
@@ -11,6 +12,7 @@ from asset_manager.binance_asset import BinanceAsset
 asset_controller = Blueprint("asset_controller", __name__)
 
 @asset_controller.route("/asset/<asset_name>", methods=["GET"])
+@cross_origin()
 def get_asset_data(asset_name: str):
     asset_response = AssetResponse()
     asset_response.assets.append(asset_name)
@@ -38,6 +40,7 @@ def get_asset_data(asset_name: str):
 
             return response
 
+        data["data"].sort(key=lambda x: x["timestamp"], reverse=True)
         asset_response.asset_data = data["data"]
 
         response = jsonify(asset_response.serialize())
@@ -46,6 +49,7 @@ def get_asset_data(asset_name: str):
         return response
 
 @asset_controller.route("/asset", methods=["GET"])
+@cross_origin()
 def list_assets():
     asset_response = AssetResponse()
 
@@ -59,6 +63,7 @@ def list_assets():
     return response
 
 @asset_controller.route("/asset/<asset_name>/graph", methods=["GET"])
+@cross_origin()
 def get_asset_graph(asset_name: str):
     asset_graph_response = AssetGraphResponse()
     
@@ -93,6 +98,7 @@ def get_asset_graph(asset_name: str):
     return response
 
 @asset_controller.route("/asset/<asset_name>/profits", methods=["GET"])
+@cross_origin()
 def get_asset_profits(asset_name: str):
     asset_profits_response = AssetProfitsResponse()
 

@@ -8,7 +8,7 @@ class AssetGraphResponse(BaseResponse):
 
     def serialize(self):
         return {
-            "base64_img": self.base64_img.decode("utf-8"),
+            "base64_img": self.base64_img.decode("utf-8") if isinstance(self.base64_img, (bytes, bytearray)) else self.base64_img,
             "asset": self.asset,
             "infos": self.infos.serialize(),
             "response_code": self.response_code

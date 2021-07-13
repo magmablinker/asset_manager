@@ -3,3 +3,4 @@ colorama
 matplotlib
 numpy
 flask
+flask-cors

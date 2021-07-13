@@ -1,4 +1,6 @@
 from dto.base_response import BaseResponse
+from asset_manager.binance_asset import BinanceAsset
+from asset_manager.util.util import Util
 
 class AssetsFetchResponse(BaseResponse):
     def __init__(self):
@@ -6,10 +8,10 @@ class AssetsFetchResponse(BaseResponse):
 
         self.assets = []
 
-    def add_asset(self, asset_name: str, asset_balance: float, symbol: str):
+    def add_asset(self, asset: BinanceAsset):
         self.assets.append({
-            "name": asset_name,
-            "balance": f"{asset_balance} {symbol}"
+            "name": asset.asset,
+            "balance": f"{Util.round(asset.symbol_balance)} {asset.pair_asset}"
         })
 
     def serialize(self):
