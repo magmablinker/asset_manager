@@ -65,14 +65,14 @@ class AssetManager(object):
 
             color = Fore.RED if is_at_loss else Fore.GREEN
 
-            print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+")
-            print(f"[{binance_asset.asset}]")
-            print(f"Inital Captured Value: {Util.round(initial_asset_data)} USDT") 
-            print(f"Last Captured Value: {Util.round(last_asset_data)} USDT")         
-            print(f"{color}{amount}{Fore.RESET} USDT | {color}{percent}{Fore.RESET}%")
-            print(f"Currently at {color}{text}{Fore.RESET}")
-            print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+")  
-            print("")
+            self.print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+")
+            self.print(f"[{binance_asset.asset}]")
+            self.print(f"Inital Captured Value: {Util.round(initial_asset_data)} USDT") 
+            self.print(f"Last Captured Value: {Util.round(last_asset_data)} USDT")         
+            self.print(f"{color}{amount}{Fore.RESET} USDT | {color}{percent}{Fore.RESET}%")
+            self.print(f"Currently at {color}{text}{Fore.RESET}")
+            self.print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+")  
+            self.print("")
 
     def print(self, text: str):
         if self.debug_mode:

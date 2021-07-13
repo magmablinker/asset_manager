@@ -50,8 +50,11 @@ class BinanceAsset(object):
         plt.title(f"{self.asset} Worth Over Time")
         plt.xlabel("Timestamp")
         plt.ylabel("Balance")
+
+        if not os.path.exists(f"img/{self.asset}"):
+            os.mkdir(f"img/{self.asset}")
         
-        plt.savefig(f"img/{self.asset}-{datetime.now().strftime('%d-%m-%Y_%H_%M_%S')}")
+        plt.savefig(f"img/{self.asset}/{datetime.now().strftime('%d-%m-%Y_%H_%M_%S')}")
 
         plt.clf()
 
