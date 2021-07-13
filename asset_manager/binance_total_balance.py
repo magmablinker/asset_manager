@@ -1,7 +1,7 @@
 import os
 import json
-import matplotlib.pyplot as plt
 from datetime import datetime
+from asset_manager.util.util import Util
 
 '''
 Represents the total balance of all binance crypto assets
@@ -39,7 +39,6 @@ class BinanceTotalBalance(object):
         with open(self.total_output_file, "w+") as f:
             json.dump(total_output, f, indent=4)
 
-
     def to_graph(self):
         x_axis = []
         y_axis = []
@@ -50,13 +49,5 @@ class BinanceTotalBalance(object):
             y_axis.append(float(entry["balance"]))
             x_axis.append(datetime.strptime(entry["timestamp"], "%d-%m-%Y %H:%M:%S").strftime("%d.%m.%Y"))
 
-        plt.plot(x_axis, y_axis)
-        plt.title("Total Balance Over Time")
-        plt.xlabel("Timestamp")
-        plt.ylabel("Balance")
+        Util.plot(x_axis, y_axis, "Total Balance Over Time", "Timestamp", "Balance", f"img/total_balance-{datetime.now().strftime('%d-%m-%Y_%H_%M_%S')}")
         
-        plt.savefig(f"img/total_balance-{datetime.now().strftime('%d-%m-%Y_%H_%M_%S')}")
-        
-        #plt.show()
-
-        plt.clf()

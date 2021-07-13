@@ -1,6 +1,5 @@
 import os
 import json
-import matplotlib.pyplot as plt
 from binance import Client
 from datetime import datetime
 from asset_manager.util.util import Util
@@ -46,17 +45,12 @@ class BinanceAsset(object):
             y_axis.append(float(entry["balance"]))
             x_axis.append(datetime.strptime(entry["timestamp"], "%d-%m-%Y %H:%M:%S").strftime("%d.%m.%Y"))
 
-        plt.plot(x_axis, y_axis)
-        plt.title(f"{self.asset} Worth Over Time")
-        plt.xlabel("Timestamp")
-        plt.ylabel("Balance")
-
         if not os.path.exists(f"img/{self.asset}"):
+            self.print(f"Directory img/{self.asset} missing, creating it")
             os.mkdir(f"img/{self.asset}")
         
-        plt.savefig(f"img/{self.asset}/{datetime.now().strftime('%d-%m-%Y_%H_%M_%S')}")
-
-        plt.clf()
+        self.print(f"Creating diagram for {self.asset}")
+        Util.plot(x_axis, y_axis, f"{self.asset} Worth Over Time", "Timestamp", "Balance", f"img/{self.asset}/{datetime.now().strftime('%d-%m-%Y_%H_%M_%S')}")
 
     def _get_symbol_balance(self, client: Client):
         symbol = f"{self.asset}{self.pair_asset}"
