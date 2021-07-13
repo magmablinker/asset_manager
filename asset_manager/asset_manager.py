@@ -44,33 +44,16 @@ class AssetManager(object):
 
     def calculate_profits_from_inital_per_asset(self):
         for binance_asset in self.binance_assets:
-            asset_data = binance_asset.load_asset_data()
-
-            if len(asset_data) < 1:
-                self.print(f"[?] Skipping asset {binance_asset.asset}, no data available")
-                continue
-
-            initial_asset_data = asset_data[0]["balance"]
-            last_asset_data = asset_data[len(asset_data) - 1]["balance"]
-
-            is_at_loss = last_asset_data < initial_asset_data
-
-            if is_at_loss:
-                text = "Loss"
-            else:
-                text = "Profit"
-
-            amount = Util.round(last_asset_data - initial_asset_data)
-            percent = Util.round(((last_asset_data - initial_asset_data) / initial_asset_data) * 100) # We don't care about decimals
-
-            color = Fore.RED if is_at_loss else Fore.GREEN
+            profits = binance_asset.get_profits()
+            
+            color = Fore.RED if profits.is_at_loss else Fore.GREEN
 
             self.print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+")
             self.print(f"[{binance_asset.asset}]")
-            self.print(f"Inital Captured Value: {Util.round(initial_asset_data)} USDT") 
-            self.print(f"Last Captured Value: {Util.round(last_asset_data)} USDT")         
-            self.print(f"{color}{amount}{Fore.RESET} USDT | {color}{percent}{Fore.RESET}%")
-            self.print(f"Currently at {color}{text}{Fore.RESET}")
+            self.print(f"Inital Captured Value: {Util.round(profits.initial_asset_data)} USDT") 
+            self.print(f"Last Captured Value: {Util.round(profits.latest_asset_data)} USDT")         
+            self.print(f"{color}{profits.amount}{Fore.RESET} USDT | {color}{profits.percent}{Fore.RESET}%")
+            self.print(f"Currently at {color}{profits.text}{Fore.RESET}")
             self.print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=+")  
             self.print("")
 

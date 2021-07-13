@@ -1,4 +1,5 @@
 from asset_manager.asset_manager import AssetManager
+from flask import Flask
 
 def main():
     asset_manager = AssetManager("config/config.json", "USDT")

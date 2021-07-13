@@ -3,6 +3,7 @@ import json
 from binance import Client
 from datetime import datetime
 from asset_manager.util.util import Util
+from dto.binance_asset_profits import BinanceAssetProfits
 
 '''
 Represents a Binance crypto asset
@@ -25,12 +26,11 @@ class BinanceAsset(object):
 
         self._write_output(output)
 
-    def print(self, text: str):
-        if self.debug:
-            print(text)
-
     def load_asset_data(self):
         output_file = f"data/assets/{self.asset}.json"
+
+        if not os.path.exists(output_file) or not os.path.isfile(output_file):
+            raise ValueError(f"No asset data for asset {self.asset} found")
 
         with open(output_file, "r") as f:
             return json.load(f)["data"]
@@ -51,6 +51,19 @@ class BinanceAsset(object):
         
         self.print(f"Creating diagram for {self.asset}")
         Util.plot(x_axis, y_axis, f"{self.asset} Worth Over Time", "Timestamp", "Balance", f"img/{self.asset}/{datetime.now().strftime('%d-%m-%Y_%H_%M_%S')}")
+
+    def get_profits(self) -> BinanceAssetProfits:
+        profits = BinanceAssetProfits()
+        asset_data = self.load_asset_data()
+        
+        if len(asset_data) < 1:
+            self.print(f"[?] Skipping asset {self.asset}, no data available")
+            return profits
+
+        profits.initial_asset_data = asset_data[0]["balance"]
+        profits.latest_asset_data = asset_data[len(asset_data) - 1]["balance"]
+
+        return profits
 
     def _get_symbol_balance(self, client: Client):
         symbol = f"{self.asset}{self.pair_asset}"
@@ -77,3 +90,7 @@ class BinanceAsset(object):
     def _write_output(self, output):
         with open(self.output_file, "w+") as f:
             json.dump(output, f, indent=4)
+
+    def print(self, text: str):
+        if self.debug:
+            print(text)
