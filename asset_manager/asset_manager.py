@@ -16,7 +16,7 @@ class AssetManager(object):
         self.binance_total_balance = BinanceTotalBalance()
         self.debug = self.binance_config.debug
         self.pair_asset = pair_asset
-        self.ignore_assets = [ self.pair_asset ] # Add assets here to ignore them => we always have to ignore the pair_asset
+        self.ignore_assets = [ self.pair_asset ] + self.binance_config.asset_blacklist # Add assets here to ignore them => we always have to ignore the pair_asset
         self.client = Client(self.binance_config.api_key, self.binance_config.api_secret)
         assets = self.client.get_account()
 

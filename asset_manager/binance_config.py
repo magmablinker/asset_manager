@@ -26,6 +26,10 @@ class BinanceConfig(object):
             if "debug" not in config:
                 config["debug"] = False
 
+            if "asset_blacklist" not in config:
+                raise ValueError(f"Config file {self.file_path} doesn't contain the required object key 'asset_blacklist'")
+
             self.api_key = config["api_key"]
             self.api_secret = config["api_secret"]
             self.debug = config["debug"]
+            self.asset_blacklist = config["asset_blacklist"]
