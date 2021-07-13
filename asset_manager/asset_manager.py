@@ -9,12 +9,12 @@ from asset_manager.util.util import Util
 Helper class to run through the process of fetching necessary data
 '''
 class AssetManager(object):
-    def __init__(self, binance_config_path: str, pair_asset: str, debug_mode=False):
+    def __init__(self, binance_config_path: str, pair_asset: str):
         init()
 
         self.binance_config = BinanceConfig(binance_config_path)
         self.binance_total_balance = BinanceTotalBalance()
-        self.debug_mode = debug_mode
+        self.debug = self.binance_config.debug
         self.pair_asset = pair_asset
         self.ignore_assets = [ self.pair_asset ] # Add assets here to ignore them => we always have to ignore the pair_asset
         self.client = Client(self.binance_config.api_key, self.binance_config.api_secret)
@@ -29,7 +29,7 @@ class AssetManager(object):
             free = float(asset["free"])
 
             if free > 0 and not asset["asset"] in self.ignore_assets:
-                self.binance_assets.append(BinanceAsset(asset["asset"], free, self.pair_asset, self.debug_mode))
+                self.binance_assets.append(BinanceAsset(asset["asset"], free, self.pair_asset, self.debug))
             
     def run(self):
         for binance_asset in self.binance_assets:
@@ -75,5 +75,5 @@ class AssetManager(object):
             self.print("")
 
     def print(self, text: str):
-        if self.debug_mode:
+        if self.debug:
             print(text)

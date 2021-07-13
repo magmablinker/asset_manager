@@ -9,11 +9,11 @@ from asset_manager.util.util import Util
 Represents a Binance crypto asset
 '''
 class BinanceAsset(object):
-    def __init__(self, asset: str, amount: float, pair_asset: str, debug_mode=False):
+    def __init__(self, asset: str, amount: float, pair_asset: str, debug=False):
         self.asset = asset
         self.amount = amount
         self.symbol_balance = 0
-        self.debug_mode = debug_mode
+        self.debug = debug
         self.output_file = f"data/assets/{self.asset}.json"
         self.pair_asset = pair_asset
 
@@ -27,7 +27,7 @@ class BinanceAsset(object):
         self._write_output(output)
 
     def print(self, text: str):
-        if self.debug_mode:
+        if self.debug:
             print(text)
 
     def load_asset_data(self):

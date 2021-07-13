@@ -23,5 +23,9 @@ class BinanceConfig(object):
             if "api_secret" not in config:
                 raise ValueError(f"Config file {self.file_path} doesn't contain the required object key 'api_key'")
 
+            if "debug" not in config:
+                config["debug"] = False
+
             self.api_key = config["api_key"]
             self.api_secret = config["api_secret"]
+            self.debug = config["debug"]

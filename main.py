@@ -1,9 +1,11 @@
 from asset_manager.asset_manager import AssetManager
 
 def main():
-    asset_manager = AssetManager("config/config.json", "USDT", True)
+    asset_manager = AssetManager("config/config.json", "USDT")
     asset_manager.run()
-    asset_manager.calculate_profits_from_inital_per_asset()
+
+    if asset_manager.debug:
+        asset_manager.calculate_profits_from_inital_per_asset()
 
     asset_manager.binance_total_balance.to_graph()
 
