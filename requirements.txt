@@ -1,2 +1,4 @@
 binance
 colorama
+matplotlib
+numpy

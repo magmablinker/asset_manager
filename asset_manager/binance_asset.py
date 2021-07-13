@@ -1,5 +1,6 @@
 import os
 import json
+import matplotlib.pyplot as plt
 from binance import Client
 from datetime import datetime
 from asset_manager.util.util import Util
@@ -34,6 +35,25 @@ class BinanceAsset(object):
 
         with open(output_file, "r") as f:
             return json.load(f)["data"]
+
+    def to_graph(self):
+        x_axis = []
+        y_axis = []
+
+        balances = self._get_output()["data"]
+
+        for entry in balances:
+            y_axis.append(float(entry["balance"]))
+            x_axis.append(datetime.strptime(entry["timestamp"], "%d-%m-%Y %H:%M:%S").strftime("%d.%m.%Y"))
+
+        plt.plot(x_axis, y_axis)
+        plt.title(f"{self.asset} Worth Over Time")
+        plt.xlabel("Timestamp")
+        plt.ylabel("Balance")
+        
+        plt.savefig(f"img/{self.asset}-{datetime.now().strftime('%d-%m-%Y_%H_%M_%S')}")
+
+        plt.clf()
 
     def _get_symbol_balance(self, client: Client):
         symbol = f"{self.asset}{self.pair_asset}"

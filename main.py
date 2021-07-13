@@ -5,5 +5,10 @@ def main():
     asset_manager.run()
     asset_manager.calculate_profits_from_inital_per_asset()
 
+    asset_manager.binance_total_balance.to_graph()
+
+    for asset in asset_manager.binance_assets:
+        asset.to_graph()
+
 if __name__ == '__main__':
     main()

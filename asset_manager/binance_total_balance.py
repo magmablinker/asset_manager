@@ -1,5 +1,6 @@
 import os
 import json
+import matplotlib.pyplot as plt
 from datetime import datetime
 
 '''
@@ -37,3 +38,25 @@ class BinanceTotalBalance(object):
     def _write_total_output(self, total_output):
         with open(self.total_output_file, "w+") as f:
             json.dump(total_output, f, indent=4)
+
+
+    def to_graph(self):
+        x_axis = []
+        y_axis = []
+
+        balances = self._get_total_output()["balances"]
+
+        for entry in balances:
+            y_axis.append(float(entry["balance"]))
+            x_axis.append(datetime.strptime(entry["timestamp"], "%d-%m-%Y %H:%M:%S").strftime("%d.%m.%Y"))
+
+        plt.plot(x_axis, y_axis)
+        plt.title("Total Balance Over Time")
+        plt.xlabel("Timestamp")
+        plt.ylabel("Balance")
+        
+        plt.savefig(f"img/total_balance-{datetime.now().strftime('%d-%m-%Y_%H_%M_%S')}")
+        
+        #plt.show()
+
+        plt.clf()

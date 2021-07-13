@@ -23,20 +23,16 @@ class AssetManager(object):
         # Load all assets that have a non zero balance and are
         # not in the "asset blacklist"
         self.assets = []
+        self.binance_assets = []
 
         for asset in assets["balances"]:
             free = float(asset["free"])
 
             if free > 0 and not asset["asset"] in self.ignore_assets:
-                self.assets.append({
-                    "asset": asset["asset"],
-                    "free": free
-                })
+                self.binance_assets.append(BinanceAsset(asset["asset"], free, self.pair_asset, self.debug_mode))
             
     def run(self):
-        for asset in self.assets:
-            binance_asset = BinanceAsset(asset["asset"], asset["free"], self.pair_asset, self.debug_mode)
-
+        for binance_asset in self.binance_assets:
             binance_asset.write(self.client)
 
             self.binance_total_balance.add_symbol_balance(binance_asset.symbol_balance)
@@ -47,9 +43,7 @@ class AssetManager(object):
         self.print("")
 
     def calculate_profits_from_inital_per_asset(self):
-        for asset in self.assets:
-            binance_asset = BinanceAsset(asset["asset"], asset["free"], self.debug_mode)
-
+        for binance_asset in self.binance_assets:
             asset_data = binance_asset.load_asset_data()
 
             if len(asset_data) < 1:
