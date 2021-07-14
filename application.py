@@ -1,6 +1,7 @@
 import matplotlib
 matplotlib.use('Agg')
 
+import atexit
 from flask import Flask
 from flask_cors import CORS
 from controller.asset_controller import asset_controller
@@ -21,15 +22,20 @@ app.register_blueprint(total_balance_controller)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-scheduler = BackgroundScheduler()
-
-scheduler.add_job(func=refetchAssets, trigger="interval", minutes=30)
-
-scheduler.start()
-
 @app.route("/api/status")
 def get_api_status():
     return {"status": "API Up and Running"}, 200
+
+@app.before_first_request
+def init_scheduler():
+    scheduler = BackgroundScheduler()
+
+    scheduler.add_job(func=refetchAssets, trigger="interval", minutes=30)
+
+    scheduler.start()
+
+    # Shut down the scheduler when exiting the app
+    atexit.register(lambda: scheduler.shutdown())
 
 if __name__ == '__main__':
     app.run(debug=True)
