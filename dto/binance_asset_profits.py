@@ -1,7 +1,6 @@
 from asset_manager.util.util import Util
-from dto.base_response import BaseResponse
 
-class BinanceAssetProfits(BaseResponse):
+class BinanceAssetProfits():
     def __init__(self):
         super().__init__()
 
@@ -31,7 +30,5 @@ class BinanceAssetProfits(BaseResponse):
             "latest_asset_data": self.latest_asset_data,
             "amount": self.amount,
             "percent": self.percent,
-            "text": self.text,
-            "infos": self.infos.serialize(),
-            "response_code": self.response_code
+            "text": self.text
         }

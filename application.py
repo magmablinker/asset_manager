@@ -19,5 +19,9 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def get_api_status():
     return {"status": "API Up and Running"}, 200
 
+@app.before_first_request
+def initialize():
+    pass # TODO: Add scheduler
+
 if __name__ == '__main__':
     app.run(debug=True)
