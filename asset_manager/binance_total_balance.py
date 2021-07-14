@@ -59,6 +59,10 @@ class BinanceTotalBalance(object):
             x_axis.append(datetime.strptime(entry["timestamp"], "%d-%m-%Y %H:%M:%S").strftime("%d.%m.%Y"))
 
         Util.plot(x_axis, y_axis, "Total Balance Over Time", "Timestamp", "Balance", "img/total_balance")
+
+    
+    def get_all_entries(self):
+        return self._get_total_output()["balances"]
     
     def get_profits(self) -> BinanceAssetProfits:
         profits = BinanceAssetProfits()

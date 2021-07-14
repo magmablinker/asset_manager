@@ -8,6 +8,7 @@ from asset_manager.binance_total_balance import BinanceTotalBalance
 from dto.asset_graph_response import AssetGraphResponse
 from datetime import datetime
 from dto.asset_profits_response import AssetProfitsResponse
+from dto.asset_response import AssetResponse
 
 total_balance_controller = Blueprint("total_balance_controller", __name__)
 
@@ -80,5 +81,19 @@ def get_balance_profits():
     
     response = jsonify(asset_profits_response.serialize())
     response.status_code = asset_profits_response.response_code
+
+    return response
+
+@total_balance_controller.route("/balance/all", methods=["GET"])
+@cross_origin()
+def get_all_balances():
+    asset_response = AssetResponse()
+
+    binance_asset = BinanceTotalBalance()
+
+    asset_response.asset_data = binance_asset.get_all_entries()
+    asset_response.assets = [ "Total Balance" ]
+
+    response = jsonify(asset_response.serialize())
 
     return response
