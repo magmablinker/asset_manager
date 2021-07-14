@@ -29,11 +29,21 @@ class ResponseInfos():
     def has_error(self):
         return len(self.errors) > 0
 
+    @property
+    def has_info(self):
+        return len(self.infos) > 0
+
+    @property
+    def has_message(self):
+        return len(self.messages) > 0
+
     def serialize(self):
         return {
             "errors": self.errors,
             "infos": self.infos,
             "messages": self.messages,
-            "has_error": self.has_error
+            "has_error": self.has_error,
+            "has_info": self.has_info,
+            "has_message": self.has_message,
         }
 

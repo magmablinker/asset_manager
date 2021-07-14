@@ -33,3 +33,18 @@ class BinanceConfig(object):
             self.api_secret = config["api_secret"]
             self.debug = config["debug"]
             self.asset_blacklist = config["asset_blacklist"]
+
+    def save_config(self):
+        with open(self.file_path, "r+") as f:
+            config = json.load(f)
+
+            config["api_key"] = self.api_key
+            config["api_secret"] = self.api_secret
+            config["debug"] = self.debug
+            config["asset_blacklist"] = self.asset_blacklist
+
+            f.seek(0)
+            
+            json.dump(config, f, indent=4)
+
+            f.truncate()

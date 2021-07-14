@@ -28,5 +28,7 @@ class BinanceAssetProfits():
             "latest_asset_data": self.latest_asset_data,
             "amount": self.amount,
             "percent": self.percent,
-            "text": self.text
+            "text": self.text,
+            "infos": self.infos.serialize(),
+            "response_code": self.response_code
         }
