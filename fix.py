@@ -14,8 +14,6 @@ for file in files:
     with open(file, "r") as f:
         data = json.load(f)
 
-    pprint(data)
-
     for entry in data["data"]:
         entry["timestamp"] = datetime.strptime(entry["timestamp"], oldFormat).strftime(newFormat)
 
