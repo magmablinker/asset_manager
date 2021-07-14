@@ -4,7 +4,6 @@ from asset_manager.binance_total_balance import BinanceTotalBalance
 from binance import Client
 from colorama import init, Fore
 from asset_manager.util.util import Util
-from pprint import pprint
 
 '''
 Helper class to run through the process of fetching necessary data
@@ -28,8 +27,6 @@ class AssetManager(object):
 
         for asset in assets["balances"]:
             free = float(asset["free"])
-
-            pprint(asset)
 
             if free > 0 and not asset["asset"] in self.ignore_assets:
                 self.binance_assets.append(BinanceAsset(asset["asset"], free, self.pair_asset, self.debug))

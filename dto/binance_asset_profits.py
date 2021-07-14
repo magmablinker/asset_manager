@@ -1,7 +1,10 @@
 from asset_manager.util.util import Util
+from dto.base_response import BaseResponse
 
-class BinanceAssetProfits():
+class BinanceAssetProfits(BaseResponse):
     def __init__(self):
+        super().__init__()
+
         self.initial_asset_data = 0
         self.latest_asset_data = 0
 
