@@ -2,6 +2,7 @@ import os
 import json
 from datetime import datetime
 from asset_manager.util.util import Util
+from dto.binance_asset_profits import BinanceAssetProfits
 
 '''
 Represents the total balance of all binance crypto assets
@@ -58,4 +59,15 @@ class BinanceTotalBalance(object):
             x_axis.append(datetime.strptime(entry["timestamp"], "%d-%m-%Y %H:%M:%S").strftime("%d.%m.%Y"))
 
         Util.plot(x_axis, y_axis, "Total Balance Over Time", "Timestamp", "Balance", "img/total_balance")
+    
+    def get_profits(self) -> BinanceAssetProfits:
+        profits = BinanceAssetProfits()
+        asset_data = self._get_total_output()["balances"]
         
+        if len(asset_data) < 1:
+            return profits
+
+        profits.initial_asset_data = asset_data[0]["balance"]
+        profits.latest_asset_data = asset_data[len(asset_data) - 1]["balance"]
+
+        return profits

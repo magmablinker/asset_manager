@@ -7,6 +7,7 @@ from dto.total_balance_response import TotalBalanceResponse
 from asset_manager.binance_total_balance import BinanceTotalBalance
 from dto.asset_graph_response import AssetGraphResponse
 from datetime import datetime
+from dto.asset_profits_response import AssetProfitsResponse
 
 total_balance_controller = Blueprint("total_balance_controller", __name__)
 
@@ -32,7 +33,7 @@ def get_total_balance():
 
 @total_balance_controller.route("/balance/graph", methods=["GET"])
 @cross_origin()
-def get_asset_graph():
+def get_balance_graph():
     asset_graph_response = AssetGraphResponse()
     
     if not os.path.exists(f"img/total_balance.png"):
@@ -62,5 +63,22 @@ def get_asset_graph():
 
     response = jsonify(asset_graph_response.serialize())
     response.status_code = asset_graph_response.response_code
+
+    return response
+
+@total_balance_controller.route("/balance/profits", methods=["GET"])
+@cross_origin()
+def get_balance_profits():
+    asset_profits_response = AssetProfitsResponse()
+
+    try:
+        binance_asset = BinanceTotalBalance()
+        asset_profits_response.asset_profits = binance_asset.get_profits()
+    except ValueError as e:
+        asset_profits_response.infos.add_error(str(e))
+        asset_profits_response.response_code = 404
+    
+    response = jsonify(asset_profits_response.serialize())
+    response.status_code = asset_profits_response.response_code
 
     return response
