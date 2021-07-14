@@ -15,5 +15,9 @@ app.register_blueprint(total_balance_controller)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+@app.route("/api/status")
+def get_api_status():
+    return {"status": "API Up and Running"}, 200
+
 if __name__ == '__main__':
     app.run(debug=True)
