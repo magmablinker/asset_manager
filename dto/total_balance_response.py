@@ -10,7 +10,7 @@ class TotalBalanceResponse(BaseResponse):
     def serialize(self):
         return {
             "total_balance": self.total_balance,
-            "timestamp": self.timestamp.strftime("%Y-%m-%dT%H:%M:%S"),
+            "timestamp": self.timestamp,
             "infos": self.infos.serialize(),
             "response_code": self.response_code
         }

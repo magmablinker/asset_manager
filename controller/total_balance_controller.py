@@ -22,7 +22,7 @@ def get_total_balance():
     try:
         total_balances = binance_total_balance.get_total_balance()
         total_balance_response.total_balance = total_balances["balance"]
-        total_balance_response.timestamp = datetime.strptime(total_balances["timestamp"], "%d-%m-%Y %H:%M:%S")
+        total_balance_response.timestamp = total_balances["timestamp"]
     except ValueError as e:
         total_balance_response.infos.add_error(str(e))
         total_balance_response.response_code = 404
