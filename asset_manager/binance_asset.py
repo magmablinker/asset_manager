@@ -43,7 +43,7 @@ class BinanceAsset(object):
 
         for entry in balances:
             y_axis.append(float(entry["balance"]))
-            x_axis.append(datetime.strptime(entry["timestamp"], "%d-%m-%Y %H:%M:%S").strftime("%d.%m.%Y"))
+            x_axis.append(datetime.strptime(entry["timestamp"], "%Y-%m-%dT%H:%M:%S").strftime("%d.%m.%Y"))
         
         self.print(f"Creating diagram for {self.asset}")
         Util.plot(x_axis, y_axis, f"{self.asset} Worth Over Time", "Timestamp", "Balance", f"img/{self.asset}")
@@ -79,7 +79,7 @@ class BinanceAsset(object):
 
     def _get_output_data(self):
         return  {
-            "timestamp": datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+            "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
             "balance": self.symbol_balance
         }
 
