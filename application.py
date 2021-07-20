@@ -26,6 +26,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def get_api_status():
     return {"status": "API Up and Running"}, 200
 
+@app.before_first_request
 def init_scheduler():
     print("Registering Scheduler")
 
@@ -39,5 +40,4 @@ def init_scheduler():
     atexit.register(lambda: scheduler.shutdown())
 
 if __name__ == '__main__':
-    init_scheduler()
     app.run(debug=True)
