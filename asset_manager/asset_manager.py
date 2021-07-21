@@ -5,10 +5,10 @@ from binance import Client
 from colorama import init, Fore
 from asset_manager.util.util import Util
 
-'''
-Helper class to run through the process of fetching necessary data
-'''
 class AssetManager(object):
+    '''
+    Helper class to run through the process of fetching necessary data
+    '''
     def __init__(self, binance_config_path: str, pair_asset: str):
         init()
 

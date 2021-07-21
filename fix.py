@@ -1,7 +1,6 @@
 import glob
 import json
 from datetime import datetime
-from pprint import pprint
 
 oldFormat = "%d-%m-%Y %H:%M:%S"
 newFormat = "%Y-%m-%dT%H:%M:%S"
