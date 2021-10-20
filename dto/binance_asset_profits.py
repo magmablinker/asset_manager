@@ -21,7 +21,7 @@ class BinanceAssetProfits():
     
     @property
     def text(self):
-        return "Loss" if self.is_at_loss else "Profits"
+        return "Loss" if self.is_at_loss else "Profit"
 
     def serialize(self):
         return {
